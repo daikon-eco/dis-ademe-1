@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "disademe1"
+version = "0.1.0"
+description = ""
+authors = ["Alexandre Duverger <42521043+aduverger@users.noreply.github.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.12,<3.13"
+transformers = "^4.46.2"
+torch = "^2.5.1"
+einops = "^0.8.0"
+numpy = "<2"
+qdrant-client = "^1.12.1"
+fastembed = { git = "https://github.com/qdrant/fastembed.git", branch = "TSK-372-add-jina-embeddings-v3" }
+fastapi = "^0.115.4"
+uvicorn = "^0.32.0"
+
+
+[tool.poetry.group.dev.dependencies]
+pandas = "^2.2.3"
+tqdm = "^4.66.6"
+jupyter = "^1.1.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
