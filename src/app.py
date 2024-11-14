@@ -10,11 +10,14 @@ from fastembed import (
 )
 from time import time
 
+from embedding import JinaEmbeddings
+
 # Initialize models
 # models_cache_dir = "/app/models"
-jina = MultiTaskTextEmbedding(
-    model_name="jinaai/jina-embeddings-v3", local_files_only=True
-)
+jina = JinaEmbeddings()
+# jina = MultiTaskTextEmbedding(
+#     model_name="jinaai/jina-embeddings-v3", local_files_only=True
+# )
 print("Jina Embedding loaded.")
 bm42 = SparseTextEmbedding(
     "Qdrant/bm42-all-minilm-l6-v2-attentions", local_files_only=True
