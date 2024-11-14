@@ -9,8 +9,10 @@ from fastembed import (
     MultiTaskTextEmbedding,
 )
 from time import time
-
 from embedding import JinaEmbeddings
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Initialize models
 # models_cache_dir = "/app/models"
@@ -64,9 +66,10 @@ async def query_embeddings(
         sparse_embedding = list(bm42.query_embed(query_text))[0]
         print(f"Sparse embedding: {round(time() - start, 2)}s")
         start = time()
-        dense_embedding = list(
-            jina.task_embed(query_text, task_type="retrieval.query")
-        )[0].embedding
+        # dense_embedding = list(
+        #     jina.task_embed(query_text, task_type="retrieval.query")
+        # )[0].embedding
+        dense_embedding = jina.encode(query_text, task="retrieval.query").tolist()[0]
         print(f"Dense embedding: {round(time() - start, 2)}s")
         start = time()
         colbert_embedding = list(colbert.query_embed(query_text))[0]
@@ -82,7 +85,7 @@ async def query_embeddings(
                     limit=max(5, int(limit * 1.5)),
                 ),
                 models.Prefetch(
-                    query=dense_embedding.tolist(),
+                    query=dense_embedding,
                     using="jina_dense",
                     limit=max(5, int(limit * 1.5)),
                 ),
